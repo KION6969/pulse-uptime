@@ -1,4 +1,4 @@
-name: Check uptime
+﻿name: Check uptime
 
 on:
   schedule:
@@ -21,19 +21,19 @@ jobs:
 
     steps:
       - name: Checkout source
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Checkout previous results
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         continue-on-error: true
         with:
           ref: data
           path: .data
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: 20
+          node-version: 22
 
       - name: Run checks
         run: node scripts/check.mjs --prev .data/status.json --seed public/status.json --out status.json
@@ -50,3 +50,4 @@ jobs:
           git add status.json
           git commit -m "chore: uptime $(date -u +%FT%TZ)"
           git push --force origin data-publish:data
+
