@@ -147,7 +147,10 @@ public/status.json         last snapshot, used as a fallback
 
 ## Honest limits
 
-- Five minutes is GitHub's minimum schedule; runs can be delayed under load.
+- Five minutes is GitHub's minimum schedule, and the scheduler is best-effort:
+  runs can be delayed under load, and a brand-new schedule can take a while to
+  register. The dashboard shows the last run time rather than pretending the
+  data is always fresh.
 - There is no email or SMS alerting yet. The roadmap is to open a GitHub issue
   automatically when a monitor transitions to down, which keeps the whole stack
   inside the repo.

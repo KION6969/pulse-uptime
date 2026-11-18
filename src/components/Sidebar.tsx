@@ -31,6 +31,9 @@ export function Sidebar({
   monitorCount,
   lastRun,
 }: SidebarProps) {
+  const delayed =
+    lastRun > 0 && Math.floor(Date.now() / 1000) - lastRun > 15 * 60
+
   return (
     <aside className="sidebar">
       <div className="brand">
@@ -69,13 +72,20 @@ export function Sidebar({
 
       <div className="engine">
         <div className="engine-head">
-          <span className={`status-dot ${health}`} />
+          <span className={`status-dot ${delayed ? 'pending' : health}`} />
           <strong>
-            {health === 'pending' ? 'Engine starting' : 'Engine live'}
+            {health === 'pending'
+              ? 'Engine starting'
+              : delayed
+                ? 'Engine delayed'
+                : 'Engine live'}
           </strong>
         </div>
         <p>GitHub Actions · every 5 min</p>
-        <p className="engine-run">Last run {timeAgo(lastRun)}</p>
+        <p className="engine-run">
+          Last run {timeAgo(lastRun)}
+          {delayed ? ' · schedules can run late' : ''}
+        </p>
         <a href={REPO_URL} target="_blank" rel="noreferrer">
           View repository <ArrowIcon size={12} />
         </a>

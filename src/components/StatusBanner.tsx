@@ -17,6 +17,8 @@ export function StatusBanner({
   lastRun,
 }: StatusBannerProps) {
   const down = monitors.filter((m) => monitorHealth(m) === 'down')
+  const delayed =
+    lastRun > 0 && Math.floor(Date.now() / 1000) - lastRun > 15 * 60
 
   const title =
     health === 'up'
@@ -27,7 +29,9 @@ export function StatusBanner({
 
   const subtitle =
     health === 'up'
-      ? `${monitors.length} monitors checked every 5 minutes`
+      ? delayed
+        ? `Last checked ${timeAgo(lastRun)} · GitHub schedules can run late`
+        : `${monitors.length} monitors checked every 5 minutes`
       : health === 'down'
         ? down.map((m) => m.name).join(', ')
         : 'The first results will appear in a few minutes'
