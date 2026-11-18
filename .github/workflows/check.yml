@@ -47,7 +47,8 @@ jobs:
           git checkout --orphan data-publish
           git rm -rf . >/dev/null 2>&1 || true
           cp /tmp/pulse/status.json status.json
-          git add status.json
+          printf '{"ignoreCommand":"exit 0"}\n' > vercel.json
+          git add status.json vercel.json
           git commit -m "chore: uptime $(date -u +%FT%TZ)"
           git push --force origin data-publish:data
 
