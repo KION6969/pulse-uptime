@@ -40,6 +40,12 @@ Pulse watches a list of URLs and tells you, at a glance, whether they are up.
 - **Tested.** The checker's merge, incident and rollup logic is covered by
   `node --test`, and CI builds the app on every push.
 
+<details>
+<summary><strong>See it on a phone</strong></summary>
+<br />
+<img src="docs/mobile.png" width="320" alt="The Pulse dashboard on a phone" />
+</details>
+
 ## How it works
 
 ```

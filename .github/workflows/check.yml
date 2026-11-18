@@ -2,7 +2,7 @@
 
 on:
   schedule:
-    # GitHub's minimum schedule. Runs may be delayed under load.
+    # GitHub's minimum schedule. Runs may be delayed or skipped under load.
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
@@ -51,4 +51,3 @@ jobs:
           git add status.json vercel.json
           git commit -m "chore: uptime $(date -u +%FT%TZ)"
           git push --force origin data-publish:data
-
