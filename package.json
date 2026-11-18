@@ -4,6 +4,27 @@
   "version": "1.0.0",
   "type": "module",
   "description": "Pulse — a zero-database uptime monitor powered by GitHub Actions and Vercel.",
+  "license": "MIT",
+  "author": "KION6969",
+  "homepage": "https://pulse-uptime-ashen.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KION6969/pulse-uptime.git"
+  },
+  "bugs": {
+    "url": "https://github.com/KION6969/pulse-uptime/issues"
+  },
+  "keywords": [
+    "uptime",
+    "uptime-monitor",
+    "status-page",
+    "github-actions",
+    "vercel",
+    "react"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --noEmit && vite build",
