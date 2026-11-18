@@ -94,6 +94,7 @@ export function AboutView() {
           <h3>Run your own</h3>
           <ul>
             <li>Fork the repo and edit <code>config/monitors.json</code>.</li>
+            <li>Point <code>src/config.ts</code> at your repository.</li>
             <li>Let the <code>check</code> workflow run once.</li>
             <li>Import the repo into Vercel — no environment variables.</li>
           </ul>

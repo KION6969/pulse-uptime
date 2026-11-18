@@ -97,6 +97,20 @@ target intentionally returns something other than 2xx/3xx.
 
 Commit and push. The next scheduled run picks it up within five minutes.
 
+## Deploy your own
+
+1. Fork this repository.
+2. Edit `config/monitors.json` and put your own URLs in it.
+3. Edit `src/config.ts` — `REPO_OWNER` and `REPO_NAME` should match your fork.
+   That is where the dashboard reads the `data` branch from.
+4. Import the repository into Vercel. It is a standard Vite app; no environment
+   variables are required.
+5. Open the **Actions** tab and run **Check uptime** once. It creates the `data`
+   branch with the first snapshot.
+
+The scheduled workflow is already in the repo. No secrets, tokens or paid
+services are involved.
+
 ## Run it locally
 
 ```bash
@@ -123,6 +137,7 @@ scripts/check.mjs          HTTP checker + status.json writer
 scripts/lib.mjs            pure merge / incident / uptime logic
 scripts/check.test.mjs     node:test coverage for that logic
 src/                       React dashboard (Vite + TypeScript)
+  config.ts                repo owner/name used by the dashboard
   components/              overview, monitor cards, detail panel, charts
   lib/                     status loading and derived metrics
 public/status.json         last snapshot, used as a fallback

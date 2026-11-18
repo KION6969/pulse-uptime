@@ -1,7 +1,5 @@
+import { STATUS_URL } from '../config'
 import type { Check, Monitor, StatusPayload } from '../types'
-
-const REMOTE =
-  'https://raw.githubusercontent.com/KION6969/pulse-uptime/data/status.json'
 
 export interface LoadResult {
   data: StatusPayload
@@ -71,7 +69,7 @@ async function getJson(url: string, timeoutMs: number): Promise<unknown> {
  */
 export async function loadStatus(): Promise<LoadResult> {
   try {
-    const data = normalize(await getJson(REMOTE, 8000))
+    const data = normalize(await getJson(STATUS_URL, 8000))
     return { data, source: 'live' }
   } catch {
     const data = normalize(await getJson('/status.json', 8000))

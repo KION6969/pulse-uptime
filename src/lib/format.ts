@@ -1,4 +1,4 @@
-export const REPO_URL = 'https://github.com/KION6969/pulse-uptime'
+export { REPO_URL } from '../config'
 
 export function timeAgo(ts: number, now = Math.floor(Date.now() / 1000)): string {
   const diff = Math.max(0, now - ts)
