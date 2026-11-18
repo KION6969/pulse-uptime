@@ -186,6 +186,7 @@ export default function App() {
             ) : null}
             {view === 'about' ? <AboutView /> : null}
 
+            <div className="foot-push" aria-hidden="true" />
             <footer className="foot">
               <span>Checks by GitHub Actions · Dashboard on Vercel</span>
               <a href={REPO_URL} target="_blank" rel="noreferrer">
