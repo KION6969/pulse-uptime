@@ -118,16 +118,14 @@ export function ResponseChart({ checks }: ResponseChartProps) {
           strokeLinejoin="round"
         />
 
-        {[
-          { index: 0, anchor: 'start' as const },
-          { index: midIndex, anchor: 'middle' as const },
-          { index: data.length - 1, anchor: 'end' as const },
-        ].map(({ index, anchor }) => (
+        {[...new Set([0, midIndex, data.length - 1])].map((index) => (
           <text
             key={index}
             x={px(index)}
             y={H - 8}
-            textAnchor={anchor}
+            textAnchor={
+              index === 0 ? 'start' : index === data.length - 1 ? 'end' : 'middle'
+            }
             fontSize="10"
             fill="#5d636e"
             fontFamily="JetBrains Mono, monospace"
@@ -172,7 +170,7 @@ export function ResponseChart({ checks }: ResponseChartProps) {
                 {fmtMs(active.ms)}
               </text>
               <text x="10" y="31" fontSize="10" fill="#5d636e">
-                {fmtTime(active.t)} Â· HTTP {active.code}
+                {fmtTime(active.t)} · HTTP {active.code}
               </text>
             </g>
           </g>

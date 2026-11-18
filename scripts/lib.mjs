@@ -81,8 +81,10 @@ export function applyCheck(prev, result, now = result.t) {
     days.push({ d: key, ok: result.ok ? 1 : 0, total: 1 });
   }
 
-  const total = days.reduce((n, d) => n + d.total, 0);
-  const up = days.reduce((n, d) => n + d.ok, 0);
+  const cutoff30 = dayKey(now - 30 * 86400);
+  const days30 = days.filter((d) => d.d >= cutoff30);
+  const total30 = days30.reduce((n, d) => n + d.total, 0);
+  const up30 = days30.reduce((n, d) => n + d.ok, 0);
 
   return {
     ...base,
@@ -95,7 +97,7 @@ export function applyCheck(prev, result, now = result.t) {
     incidents: incidents.slice(-MAX_INCIDENTS),
     last: result,
     uptime24h: computeUptime(checks, now - 86400),
-    uptime30d: total ? round2((up / total) * 100) : null,
+    uptime30d: total30 ? round2((up30 / total30) * 100) : null,
   };
 }
 

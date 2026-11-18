@@ -103,6 +103,10 @@ export function DetailPanel({ monitor, onClose }: DetailPanelProps) {
             <span>uptime · 24h</span>
           </div>
           <div>
+            <b>{fmtPct(monitor.uptime30d)}</b>
+            <span>uptime · 30d</span>
+          </div>
+          <div>
             <b>{fmtMs(avg)}</b>
             <span>avg response</span>
           </div>

@@ -1072,7 +1072,7 @@ p {
 
 .panel-stats {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 1px;
   margin-top: 20px;
   border: 1px solid var(--line);
@@ -1837,6 +1837,10 @@ pre code {
 
   .panel-stats b {
     font-size: 1.1rem;
+  }
+
+  .panel-stats {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .panel-stats div {

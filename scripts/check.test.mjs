@@ -78,6 +78,14 @@ test('daily aggregates keep history beyond the 24-hour check buffer', () => {
   assert.equal(monitor.uptime30d, 50);
 });
 
+test('the 30-day uptime window ignores older daily aggregates', () => {
+  const old = T0 - 40 * 86400;
+  let monitor = applyCheck(null, result({ t: old }), old);
+  monitor = applyCheck(monitor, result({ t: T0, code: 500, ok: false }), T0);
+  assert.equal(monitor.days.length, 2);
+  assert.equal(monitor.uptime30d, 0, 'the 40-day-old healthy day must not lift the 30-day figure');
+});
+
 test('mergeStatus preserves order, drops removed monitors and keeps history', () => {
   const config = [
     { id: 'a', name: 'A', url: 'https://a.test' },
