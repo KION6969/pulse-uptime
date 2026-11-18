@@ -1,5 +1,11 @@
 [
   {
+    "id": "pulse",
+    "name": "Pulse dashboard",
+    "url": "https://pulse-uptime-ashen.vercel.app",
+    "group": "Apps"
+  },
+  {
     "id": "life-os",
     "name": "Life OS",
     "url": "https://life-os-two-pied.vercel.app",

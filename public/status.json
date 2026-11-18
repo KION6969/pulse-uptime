@@ -1,6 +1,44 @@
 {
-  "generatedAt": 1795028892,
+  "generatedAt": 1795029415,
   "monitors": [
+    {
+      "id": "pulse",
+      "name": "Pulse dashboard",
+      "url": "https://pulse-uptime-ashen.vercel.app",
+      "group": "Apps",
+      "checks": [
+        {
+          "id": "pulse",
+          "name": "Pulse dashboard",
+          "url": "https://pulse-uptime-ashen.vercel.app",
+          "group": "Apps",
+          "t": 1795029414,
+          "ms": 826,
+          "code": 200,
+          "ok": true
+        }
+      ],
+      "days": [
+        {
+          "d": "2026-11-18",
+          "ok": 1,
+          "total": 1
+        }
+      ],
+      "incidents": [],
+      "last": {
+        "id": "pulse",
+        "name": "Pulse dashboard",
+        "url": "https://pulse-uptime-ashen.vercel.app",
+        "group": "Apps",
+        "t": 1795029414,
+        "ms": 826,
+        "code": 200,
+        "ok": true
+      },
+      "uptime24h": 100,
+      "uptime30d": 100
+    },
     {
       "id": "life-os",
       "name": "Life OS",
@@ -26,13 +64,23 @@
           "ms": 413,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "life-os",
+          "name": "Life OS",
+          "url": "https://life-os-two-pied.vercel.app",
+          "group": "Apps",
+          "t": 1795029414,
+          "ms": 677,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -41,8 +89,8 @@
         "name": "Life OS",
         "url": "https://life-os-two-pied.vercel.app",
         "group": "Apps",
-        "t": 1795028890,
-        "ms": 413,
+        "t": 1795029414,
+        "ms": 677,
         "code": 200,
         "ok": true
       },
@@ -74,13 +122,23 @@
           "ms": 273,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "portfolio",
+          "name": "Portfolio",
+          "url": "https://github.com/KION6969",
+          "group": "Apps",
+          "t": 1795029414,
+          "ms": 420,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -89,8 +147,8 @@
         "name": "Portfolio",
         "url": "https://github.com/KION6969",
         "group": "Apps",
-        "t": 1795028891,
-        "ms": 273,
+        "t": 1795029414,
+        "ms": 420,
         "code": 200,
         "ok": true
       },
@@ -122,13 +180,23 @@
           "ms": 532,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "0tohero",
+          "name": "0tohero",
+          "url": "https://0tohero-ten.vercel.app",
+          "group": "Apps",
+          "t": 1795029414,
+          "ms": 717,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -137,8 +205,8 @@
         "name": "0tohero",
         "url": "https://0tohero-ten.vercel.app",
         "group": "Apps",
-        "t": 1795028891,
-        "ms": 532,
+        "t": 1795029414,
+        "ms": 717,
         "code": 200,
         "ok": true
       },
@@ -170,13 +238,23 @@
           "ms": 1199,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "apex-roofing",
+          "name": "Apex Roofing",
+          "url": "https://apex-roofing.whop.site",
+          "group": "Apps",
+          "t": 1795029414,
+          "ms": 1283,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -185,8 +263,8 @@
         "name": "Apex Roofing",
         "url": "https://apex-roofing.whop.site",
         "group": "Apps",
-        "t": 1795028891,
-        "ms": 1199,
+        "t": 1795029414,
+        "ms": 1283,
         "code": 200,
         "ok": true
       },
@@ -218,13 +296,23 @@
           "ms": 366,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "github",
+          "name": "GitHub",
+          "url": "https://github.com",
+          "group": "Infrastructure",
+          "t": 1795029414,
+          "ms": 492,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -233,8 +321,8 @@
         "name": "GitHub",
         "url": "https://github.com",
         "group": "Infrastructure",
-        "t": 1795028891,
-        "ms": 366,
+        "t": 1795029414,
+        "ms": 492,
         "code": 200,
         "ok": true
       },
@@ -266,13 +354,23 @@
           "ms": 300,
           "code": 200,
           "ok": true
+        },
+        {
+          "id": "vercel",
+          "name": "Vercel",
+          "url": "https://vercel.com",
+          "group": "Infrastructure",
+          "t": 1795029414,
+          "ms": 462,
+          "code": 200,
+          "ok": true
         }
       ],
       "days": [
         {
           "d": "2026-11-18",
-          "ok": 2,
-          "total": 2
+          "ok": 3,
+          "total": 3
         }
       ],
       "incidents": [],
@@ -281,8 +379,8 @@
         "name": "Vercel",
         "url": "https://vercel.com",
         "group": "Infrastructure",
-        "t": 1795028891,
-        "ms": 300,
+        "t": 1795029414,
+        "ms": 462,
         "code": 200,
         "ok": true
       },
