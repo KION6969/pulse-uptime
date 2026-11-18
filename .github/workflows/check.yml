@@ -1,0 +1,52 @@
+name: Check uptime
+
+on:
+  schedule:
+    # GitHub's minimum schedule. Runs may be delayed under load.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: uptime-check
+  cancel-in-progress: false
+
+jobs:
+  check:
+    name: Check every monitor
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Checkout previous results
+        uses: actions/checkout@v4
+        continue-on-error: true
+        with:
+          ref: data
+          path: .data
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run checks
+        run: node scripts/check.mjs --prev .data/status.json --seed public/status.json --out status.json
+
+      - name: Publish the data branch
+        run: |
+          mkdir -p /tmp/pulse
+          cp status.json /tmp/pulse/status.json
+          git config user.name "pulse-bot"
+          git config user.email "pulse-bot@users.noreply.github.com"
+          git checkout --orphan data-publish
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/pulse/status.json status.json
+          git add status.json
+          git commit -m "chore: uptime $(date -u +%FT%TZ)"
+          git push --force origin data-publish:data
