@@ -77,6 +77,11 @@ GitHub Actions ──► scripts/check.mjs ──► status.json
    and falls back to the snapshot bundled at build time if the branch is
    unreachable. That is why the page is never blank.
 
+GitHub's scheduler is best-effort and can delay or drop a five-minute slot.
+`watchdog.yml` is an independent five-minute schedule that dispatches a check
+when `status.json` is more than six minutes old. Pushes to `main` also trigger an
+immediate check, and `gh workflow run check.yml` is available at any time.
+
 ## Add a monitor
 
 Append one object to `config/monitors.json`:
