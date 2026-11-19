@@ -70,7 +70,8 @@ GitHub Actions ──► scripts/check.mjs ──► status.json
    288-check ring buffer (24 hours at five-minute checks), updates today's
    aggregate, opens an incident on the first failure and closes it on recovery.
 4. The workflow force-pushes the resulting `status.json` to the `data` branch as
-   a single orphan commit, so the branch never accumulates history.
+   a single orphan commit, along with a one-line `vercel.json` that tells Vercel
+   not to build that branch.
 5. The dashboard fetches
    [`data/status.json`](https://raw.githubusercontent.com/KION6969/pulse-uptime/data/status.json)
    and falls back to the snapshot bundled at build time if the branch is
@@ -118,8 +119,12 @@ git clone https://github.com/KION6969/pulse-uptime.git
 cd pulse-uptime
 npm install
 npm run check     # checks every monitor, writes public/status.json
-npm run dev       # http://localhost:5173
+npm run dev       # http://localhost:5173 — dev reads that snapshot first
 ```
+
+In development the dashboard prefers `public/status.json`, so you can test monitor
+changes without touching the deployed data branch. The production build reads the
+`data` branch first and falls back to the bundled snapshot.
 
 Useful scripts:
 

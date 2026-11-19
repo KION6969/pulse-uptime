@@ -66,13 +66,29 @@ async function getJson(url: string, timeoutMs: number): Promise<unknown> {
  * Live data comes from the `data` branch on GitHub. If that is unreachable
  * (first deploy, offline, rate limit) fall back to the snapshot bundled at
  * build time so the dashboard is never blank.
+ *
+ * In development the order is reversed so `npm run check` shows up immediately
+ * instead of being hidden behind the deployed snapshot.
  */
 export async function loadStatus(): Promise<LoadResult> {
-  try {
-    const data = normalize(await getJson(STATUS_URL, 8000))
-    return { data, source: 'live' }
-  } catch {
-    const data = normalize(await getJson('/status.json', 8000))
-    return { data, source: 'snapshot' }
+  const sources = import.meta.env.DEV
+    ? [
+        { url: '/status.json', source: 'snapshot' as const },
+        { url: STATUS_URL, source: 'live' as const },
+      ]
+    : [
+        { url: STATUS_URL, source: 'live' as const },
+        { url: '/status.json', source: 'snapshot' as const },
+      ]
+
+  for (const candidate of sources) {
+    try {
+      const data = normalize(await getJson(candidate.url, 8000))
+      return { data, source: candidate.source }
+    } catch {
+      // Try the next source.
+    }
   }
+
+  throw new Error('Unable to load the status file')
 }
