@@ -30,7 +30,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview",
     "check": "node scripts/check.mjs",
-    "test": "node --test scripts/check.test.mjs"
+    "test": "node --test scripts/check.test.mjs scripts/integration.test.mjs"
   },
   "dependencies": {
     "react": "^19.3.1",

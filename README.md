@@ -48,6 +48,23 @@ Pulse watches a list of URLs and tells you, at a glance, whether they are up.
 
 ## How it works
 
+```mermaid
+graph LR
+    A[config/monitors.json] --> B[GitHub Actions every 5 min]
+    B --> C[scripts/check.mjs]
+    C --> D[status.json]
+    D --> E[force-push to data branch]
+    E --> F[React dashboard on Vercel]
+    F --> G[reads data/status.json]
+    style A fill:#e1f5e1
+    style B fill:#fff4e1
+    style C fill:#fff4e1
+    style D fill:#e1e1ff
+    style E fill:#e1e1ff
+    style F fill:#f1e1ff
+    style G fill:#f1e1ff
+```
+
 ```
 config/monitors.json
         â”‚
