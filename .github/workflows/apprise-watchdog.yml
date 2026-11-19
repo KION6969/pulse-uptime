@@ -1,10 +1,9 @@
 name: Apprise watchdog
 
 on:
-  schedule:
-    # apprise.dev guarantees this runs every 5 minutes
-    - cron: '*/5 * * * *'
   workflow_dispatch:
+  push:
+    branches: [main]
 
 permissions:
   contents: write
@@ -20,14 +19,6 @@ jobs:
     timeout-minutes: 10
 
     steps:
-      - name: Verify apprise.dev is reachable
-        run: |
-          STATUS=$(curl -sf -w '%{http_code}' https://cron-job.org/ping/ || echo "000")
-          echo "Apprise returned HTTP $STATUS"
-          if [ "$STATUS" != "200" ]; then
-            echo "⚠️  Apprise daemon may be down, continuing with checks"
-          fi
-
       - name: Checkout source
         uses: actions/checkout@v5
         with:
