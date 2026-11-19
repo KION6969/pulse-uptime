@@ -20,7 +20,7 @@
   </p>
 </div>
 
-![Pulse dashboard](docs/screenshot.png)
+![Pulse dashboard](docs/screenshot.png?v=2)
 
 ## What it does
 
@@ -43,7 +43,7 @@ Pulse watches a list of URLs and tells you, at a glance, whether they are up.
 <details>
 <summary><strong>See it on a phone</strong></summary>
 <br />
-<img src="docs/mobile.png" width="320" alt="The Pulse dashboard on a phone" />
+<img src="docs/mobile.png?v=2" width="320" alt="The Pulse dashboard on a phone" />
 </details>
 
 ## How it works
