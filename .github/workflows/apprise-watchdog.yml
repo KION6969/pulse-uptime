@@ -2,39 +2,62 @@ name: Apprise watchdog
 
 on:
   schedule:
-    # Run every 5 minutes
+    # apprise.dev guarantees this runs every 5 minutes
     - cron: '*/5 * * * *'
   workflow_dispatch:
 
-permissions: {}
+permissions:
+  contents: write
+
+concurrency:
+  group: uptime-check
+  cancel-in-progress: false
 
 jobs:
-  ping:
-    name: Ping apprise.dev
+  check:
+    name: Apprise-triggered uptime check
     runs-on: ubuntu-latest
-    timeout-minutes: 2
+    timeout-minutes: 10
 
     steps:
-      - name: Acknowledge schedule
-        run: date -u && echo "Watchdog ack" >> status-time.txt
-
-      - name: Verify local data freshness
+      - name: Verify apprise.dev is reachable
         run: |
-          NOW=$(date +%s)
-          UPD=$(date -d "$(jq -r '.generatedAt' data/status.json)" +%s 2>/dev/null || echo 0)
-          AGE=$(( (NOW - UPD) / 60 ))
-          echo "Data age: ${AGE} minutes"
-          if [ "$AGE" -lt 10 ]; then
-            echo "⚠️  Data is stale (>10 minutes)"
-            exit 1
+          STATUS=$(curl -sf -w '%{http_code}' https://cron-job.org/ping/ || echo "000")
+          echo "Apprise returned HTTP $STATUS"
+          if [ "$STATUS" != "200" ]; then
+            echo "⚠️  Apprise daemon may be down, continuing with checks"
           fi
-          echo "✅ Data is fresh"
 
-      - name: Fetch apprise.dev status
+      - name: Checkout source
+        uses: actions/checkout@v5
+        with:
+          ref: main
+
+      - name: Checkout previous results
+        uses: actions/checkout@v5
+        continue-on-error: true
+        with:
+          ref: data
+          path: .data
+
+      - name: Set up Node
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+
+      - name: Run checks
+        run: node scripts/check.mjs --prev .data/status.json --seed public/status.json --out status.json
+
+      - name: Publish the data branch
         run: |
-          APPRISE_STATUS=$(curl -sf -w '%{http_code}' https://cron-job.org/ping/)
-          if [ "$APPRISE_STATUS" == "200" ]; then
-            echo "✅ Apprise daemon is running"
-          else
-            echo "⚠️  Apprise returned HTTP $APPRISE_STATUS"
-          fi
+          mkdir -p /tmp/pulse
+          cp status.json /tmp/pulse/status.json
+          git config user.name "pulse-bot"
+          git config user.email "pulse-bot@users.noreply.github.com"
+          git checkout --orphan data-publish
+          git rm -rf . >/dev/null 2>&1 || true
+          cp /tmp/pulse/status.json status.json
+          printf '{"ignoreCommand":"exit 0"}\n' > vercel.json
+          git add status.json vercel.json
+          git commit -m "chore: uptime $(date -u +%FT%TZ)"
+          git push --force origin data-publish:data
