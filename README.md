@@ -14,7 +14,7 @@
 
   <p>
     <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/KION6969/pulse-uptime/actions/workflows/ci.yml/badge.svg" /></a>
-    <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/uptime.yml"><img alt="Uptime checks" src="https://img.shields.io/badge/checks-every%205%20min-3ddc97?style=flat-square" /></a>
+    <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/apprise-watchdog.yml"><img alt="Uptime checks" src="https://img.shields.io/badge/checks-every%205%20min-3ddc97?style=flat-square" /></a>
     <img alt="No database" src="https://img.shields.io/badge/database-none-3ddc97?style=flat-square" />
     <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-6b7280?style=flat-square" />
   </p>
