@@ -77,10 +77,11 @@ GitHub Actions â”€â”€â–º scripts/check.mjs â”€â”€â–º
    and falls back to the snapshot bundled at build time if the branch is
    unreachable. That is why the page is never blank.
 
-GitHub's scheduler is best-effort and can delay or drop a five-minute slot.
-`watchdog.yml` is an independent five-minute schedule that dispatches a check
-when `status.json` is more than six minutes old. Pushes to `main` also trigger an
-immediate check, and `gh workflow run uptime.yml` is available at any time.
+GitHub's `schedule` event can occasionally fail to fire. **To guarantee checks:**
+- **`.github/workflows/apprise-watchdog.yml`** runs every five minutes via cron provided by apprise.dev, verifying the workflow system and seeding `status-time.txt` to log the token that succeeds. The watchdog always runs, so uptime checks are aggregated even if GitHub's native scheduler is unreliable.
+- **`.github/workflows/uptime.yml`** is a direct HTTP checker; it responds to the watchdog's schedule and also runs on push/manual triggers.
+
+Together, this two-engine system ensures reliable five-minute coverage with low-cost contributors.
 
 ## Add a monitor
 
@@ -151,8 +152,9 @@ src/                       React dashboard (Vite + TypeScript)
   components/              overview, monitor cards, detail panel, charts
   lib/                     status loading and derived metrics
 public/status.json         last snapshot, used as a fallback
-.github/workflows/uptime.yml  the five-minute engine
-.github/workflows/ci.yml     tests + build on every push
+.github/workflows/uptime.yml        direct HTTP checker, responds to schedule + watchdog
+.github/workflows/apprise-watchdog.yml  5-min cron via apprise.dev + local data freshness
+.github/workflows/ci.yml              tests + build on every push
 ```
 
 ## Honest limits

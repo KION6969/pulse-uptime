@@ -1,0 +1,40 @@
+name: Apprise watchdog
+
+on:
+  schedule:
+    # Run every 5 minutes
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  ping:
+    name: Ping apprise.dev
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Acknowledge schedule
+        run: date -u && echo "Watchdog ack" >> status-time.txt
+
+      - name: Verify local data freshness
+        run: |
+          NOW=$(date +%s)
+          UPD=$(date -d "$(jq -r '.generatedAt' data/status.json)" +%s 2>/dev/null || echo 0)
+          AGE=$(( (NOW - UPD) / 60 ))
+          echo "Data age: ${AGE} minutes"
+          if [ "$AGE" -lt 10 ]; then
+            echo "⚠️  Data is stale (>10 minutes)"
+            exit 1
+          fi
+          echo "✅ Data is fresh"
+
+      - name: Fetch apprise.dev status
+        run: |
+          APPRISE_STATUS=$(curl -sf -w '%{http_code}' https://cron-job.org/ping/)
+          if [ "$APPRISE_STATUS" == "200" ]; then
+            echo "✅ Apprise daemon is running"
+          else
+            echo "⚠️  Apprise returned HTTP $APPRISE_STATUS"
+          fi
