@@ -1,4 +1,4 @@
-name: Check watchdog
+﻿name: Check watchdog
 
 on:
   schedule:
@@ -35,6 +35,6 @@ jobs:
           age=$(( (now - generated) / 60 ))
           echo "Pulse data is ${age} minute(s) old."
           if [ "$age" -ge 6 ]; then
-            gh workflow run check.yml --ref main
+            gh workflow run uptime.yml --ref main
             echo "Dispatched a fresh check."
           fi

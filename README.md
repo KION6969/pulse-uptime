@@ -1,4 +1,4 @@
-<div align="center">
+﻿<div align="center">
   <img src="public/favicon.svg" alt="Pulse" width="76" height="76" />
   <h1>Pulse</h1>
   <p><strong>Uptime monitoring without the ceremony.</strong></p>
@@ -6,15 +6,15 @@
 
   <p>
     <a href="https://pulse-uptime-ashen.vercel.app"><strong>Live demo</strong></a>
-    &nbsp;·&nbsp;
+    &nbsp;Â·&nbsp;
     <a href="#how-it-works">How it works</a>
-    &nbsp;·&nbsp;
+    &nbsp;Â·&nbsp;
     <a href="#add-a-monitor">Add a monitor</a>
   </p>
 
   <p>
     <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/ci.yml"><img alt="CI" src="https://github.com/KION6969/pulse-uptime/actions/workflows/ci.yml/badge.svg" /></a>
-    <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/check.yml"><img alt="Uptime checks" src="https://img.shields.io/badge/checks-every%205%20min-3ddc97?style=flat-square" /></a>
+    <a href="https://github.com/KION6969/pulse-uptime/actions/workflows/uptime.yml"><img alt="Uptime checks" src="https://img.shields.io/badge/checks-every%205%20min-3ddc97?style=flat-square" /></a>
     <img alt="No database" src="https://img.shields.io/badge/database-none-3ddc97?style=flat-square" />
     <img alt="License MIT" src="https://img.shields.io/badge/license-MIT-6b7280?style=flat-square" />
   </p>
@@ -50,21 +50,21 @@ Pulse watches a list of URLs and tells you, at a glance, whether they are up.
 
 ```
 config/monitors.json
-        │
-        ▼
-GitHub Actions ──► scripts/check.mjs ──► status.json
- (every 5 min)          │                     │
-                        │                     │ force-push, one commit
-                        │                     ▼
-                        │              branch: data
-                        │                     │
-                        ▼                     ▼
+        â”‚
+        â–¼
+GitHub Actions â”€â”€â–º scripts/check.mjs â”€â”€â–º status.json
+ (every 5 min)          â”‚                     â”‚
+                        â”‚                     â”‚ force-push, one commit
+                        â”‚                     â–¼
+                        â”‚              branch: data
+                        â”‚                     â”‚
+                        â–¼                     â–¼
                  run summary          React dashboard (Vercel)
                      in Actions        reads the raw JSON
 ```
 
 1. **`config/monitors.json`** is the only configuration. Add a URL, push, done.
-2. **`.github/workflows/check.yml`** runs every five minutes and executes
+2. **`.github/workflows/uptime.yml`** runs every five minutes and executes
    `scripts/check.mjs` against every monitor in parallel.
 3. The checker merges each result into the previous state: it appends to a
    288-check ring buffer (24 hours at five-minute checks), updates today's
@@ -80,7 +80,7 @@ GitHub Actions ──► scripts/check.mjs ──► status.json
 GitHub's scheduler is best-effort and can delay or drop a five-minute slot.
 `watchdog.yml` is an independent five-minute schedule that dispatches a check
 when `status.json` is more than six minutes old. Pushes to `main` also trigger an
-immediate check, and `gh workflow run check.yml` is available at any time.
+immediate check, and `gh workflow run uptime.yml` is available at any time.
 
 ## Add a monitor
 
@@ -97,7 +97,7 @@ Append one object to `config/monitors.json`:
 ]
 ```
 
-`id` must be unique and stable — that is how history is matched across runs.
+`id` must be unique and stable â€” that is how history is matched across runs.
 An optional `"expect"` field accepts a status code or an array of codes when a
 target intentionally returns something other than 2xx/3xx.
 
@@ -107,7 +107,7 @@ Commit and push. The next scheduled run picks it up within five minutes.
 
 1. Fork this repository.
 2. Edit `config/monitors.json` and put your own URLs in it.
-3. Edit `src/config.ts` — `REPO_OWNER` and `REPO_NAME` should match your fork.
+3. Edit `src/config.ts` â€” `REPO_OWNER` and `REPO_NAME` should match your fork.
    That is where the dashboard reads the `data` branch from.
 4. Import the repository into Vercel. It is a standard Vite app; no environment
    variables are required.
@@ -124,7 +124,7 @@ git clone https://github.com/KION6969/pulse-uptime.git
 cd pulse-uptime
 npm install
 npm run check     # checks every monitor, writes public/status.json
-npm run dev       # http://localhost:5173 — dev reads that snapshot first
+npm run dev       # http://localhost:5173 â€” dev reads that snapshot first
 ```
 
 In development the dashboard prefers `public/status.json`, so you can test monitor
@@ -151,7 +151,7 @@ src/                       React dashboard (Vite + TypeScript)
   components/              overview, monitor cards, detail panel, charts
   lib/                     status loading and derived metrics
 public/status.json         last snapshot, used as a fallback
-.github/workflows/check.yml  the five-minute engine
+.github/workflows/uptime.yml  the five-minute engine
 .github/workflows/ci.yml     tests + build on every push
 ```
 
@@ -166,9 +166,9 @@ public/status.json         last snapshot, used as a fallback
   automatically when a monitor transitions to down, which keeps the whole stack
   inside the repo.
 - The `data` branch is public, so anyone can read the uptime history.
-- A failed check does not fail the workflow — an outage is data, not a broken
+- A failed check does not fail the workflow â€” an outage is data, not a broken
   build.
 
 ## License
 
-MIT © KION6969
+MIT Â© KION6969
