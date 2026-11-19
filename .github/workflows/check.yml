@@ -2,9 +2,11 @@
 
 on:
   schedule:
-    # GitHub's minimum interval. Off-minute slots avoid the top-of-hour rush,
-    # where scheduled runs are most likely to be delayed or dropped.
-    - cron: '2,7,12,17,22,27,32,37,42,47,52,57 * * * *'
+    # GitHub's minimum interval. Scheduled runs are best-effort; the
+    # watchdog workflow is the fallback when the scheduler drops one.
+    - cron: '*/5 * * * *'
+  push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:

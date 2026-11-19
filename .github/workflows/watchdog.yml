@@ -1,0 +1,40 @@
+name: Check watchdog
+
+on:
+  schedule:
+    # A second, independent registration with GitHub's scheduler. If the
+    # primary schedule is delayed, this dispatches a check once the data
+    # branch is more than a few minutes old.
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  actions: write
+  contents: read
+
+concurrency:
+  group: uptime-watchdog
+  cancel-in-progress: true
+
+jobs:
+  nudge:
+    name: Nudge a stale check
+    runs-on: ubuntu-latest
+    timeout-minutes: 2
+
+    steps:
+      - name: Dispatch a check when the data is stale
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          url="https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/data/status.json?cachebust=$(date +%s)"
+          json="$(curl -fsSL "$url" || true)"
+          generated="$(printf '%s' "$json" | jq -r '.generatedAt // 0' 2>/dev/null || echo 0)"
+          now="$(date +%s)"
+          age=$(( (now - generated) / 60 ))
+          echo "Pulse data is ${age} minute(s) old."
+          if [ "$age" -ge 6 ]; then
+            gh workflow run check.yml --ref main
+            echo "Dispatched a fresh check."
+          fi
